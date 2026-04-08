@@ -4,7 +4,7 @@
 
 **Project Name:** Fintech Consumer Analytics
 
-**GitHub Repo:** [Add public repo URL after initializing on GitHub]
+**GitHub Repo:** https://github.com/brandon-dong/fintech-consumer-analytics
 
 ## Job Posting
 
