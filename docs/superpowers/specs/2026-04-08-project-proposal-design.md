@@ -210,9 +210,16 @@ fintech-consumer-analytics/
 
 ---
 
-## 7. Proposal Reflection Paragraph
+## 7. Proposal & README Files
 
-> This role at Greenlight requires the exact skills covered in ISBA 4715: SQL for ad-hoc analysis, dbt for dimensional modeling and pipeline orchestration, dashboards for surfacing KPIs to stakeholders, and Python for data extraction and automation. The posting explicitly calls out dbt model contributions and AI proficiency with Claude — both core to this course's workflow. My project builds an end-to-end analytics pipeline on the CFPB Consumer Complaint Database, modeling complaint trends across fintech products into a star schema, surfacing CAC-adjacent metrics (dispute rates, resolution quality, complaint velocity) through a Streamlit dashboard, and building a knowledge base of fintech market intelligence — directly mirroring what a Marketing Science analyst at Greenlight would build to understand consumer trust signals across their competitive landscape.
+Actual deliverable files created and committed:
+
+- **`docs/proposal.md`** — follows `proposal-template.md` exactly. Includes name, project name, repo link placeholder, job posting details, SQL requirement quote (two quotes from the posting), and a reflection paragraph that answers all 4 required questions: relevance to class, specific coursework skills, what you'd build, and 2-3 transferable roles.
+- **`README.md`** — follows `readme-template.md` exactly. All Milestone 02 sections (pipeline diagram, ERD, dashboard screenshot, live URL, key insights) are marked with `<!-- Coming in Milestone 01/02 -->` placeholders so the structure is in place and graders can see the intent.
+
+**Reflection paragraph (in `docs/proposal.md`):**
+
+This posting is directly relevant to ISBA 4715 because it requires the exact skills this course covers: SQL for ad-hoc analysis and user list generation, dbt for building and maintaining attribution pipelines with scalable data models, dashboards for surfacing KPIs to marketing and leadership stakeholders, Python for data extraction and automation, and AI proficiency with Claude — which the posting explicitly calls out as a first-class tool on the team. To prove I can do this job, I am building an end-to-end analytics pipeline on the CFPB Consumer Complaint Database: extracting complaint data via REST API, loading it to Snowflake, modeling it into a star schema through dbt staging and mart layers, and surfacing complaint trends and dispute rates through a deployed Streamlit dashboard — the same workflow a Marketing Science analyst at Greenlight would use to understand consumer trust signals across their competitive landscape. Beyond Greenlight, this project transfers directly to data analyst roles at any consumer fintech company (Chime, SoFi, Wise), to regtech and compliance analytics roles where CFPB data is a primary source, and to CRM analytics roles where dispute rates and resolution quality are core customer satisfaction KPIs.
 
 ---
 
