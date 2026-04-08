@@ -3,6 +3,10 @@
 *.env
 .env.*
 !.env.example
+*.key
+*.pem
+secrets*.json
+secrets*.toml
 
 # Python
 __pycache__/
@@ -42,4 +46,4 @@ Thumbs.db
 .ipynb_checkpoints/
 
 # Streamlit
-.streamlit/secrets.toml
+.streamlit/
