@@ -1,0 +1,59 @@
+name: Extract CFPB Complaints and Transform
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  extract-and-transform:
+    runs-on: ubuntu-latest
+
+    env:
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install extraction dependencies
+        run: pip install -r extract/requirements.txt
+
+      - name: Run CFPB extraction
+        run: python extract/cfpb_extract.py
+
+      - name: Install dbt
+        run: pip install dbt-snowflake==1.11.4
+
+      - name: Create dbt profiles
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml << EOF
+          fintech_analytics:
+            target: prod
+            outputs:
+              prod:
+                type: snowflake
+                account: "$SNOWFLAKE_ACCOUNT"
+                user: "$SNOWFLAKE_USER"
+                password: "$SNOWFLAKE_PASSWORD"
+                database: "${SNOWFLAKE_DATABASE:-FINTECH_ANALYTICS}"
+                warehouse: "${SNOWFLAKE_WAREHOUSE:-COMPUTE_WH}"
+                schema: RAW
+                threads: 4
+          EOF
+
+      - name: Run dbt
+        run: python -m dbt run --project-dir dbt_project
+
+      - name: Test dbt
+        run: python -m dbt test --project-dir dbt_project

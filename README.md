@@ -24,7 +24,24 @@ This project demonstrates the core skills the role requires: SQL-heavy analysis,
 
 ## Pipeline Diagram
 
-<!-- Coming in Milestone 01 — insert Mermaid or image showing all layers: CFPB API → GitHub Actions → Snowflake RAW → dbt Staging → dbt Mart → Streamlit Dashboard + Knowledge Base path -->
+```mermaid
+flowchart LR
+    A[CFPB REST API] -->|Python requests| B[cfpb_extract.py]
+    B -->|snowflake-connector-python| C[Snowflake RAW\nCFPB_COMPLAINTS]
+    C -->|dbt staging| D[Snowflake STAGING\nstg_cfpb_complaints]
+    D -->|dbt mart| E[Snowflake MART\nStar Schema]
+    E -->|st.connection| F[Streamlit Dashboard\nCommunity Cloud]
+
+    G[Web Scrape\nFirecrawl / PDFs] -->|GitHub Actions| H[knowledge/raw/]
+    H -->|Claude Code| I[knowledge/wiki/\nSynthesized Insights]
+
+    subgraph Orchestration
+        J[GitHub Actions\nDaily 6 AM UTC]
+    end
+
+    J -.->|triggers| B
+    J -.->|triggers| G
+```
 
 ## ERD (Star Schema)
 
