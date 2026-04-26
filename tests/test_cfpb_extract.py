@@ -16,7 +16,7 @@ def test_parse_complaint_maps_all_fields():
         "submitted_via": "Web",
         "date_sent_to_company": "2024-01-16",
         "company_response_to_consumer": "Closed with explanation",
-        "timely": "Yes",
+        "timely_response": "Yes",
         "consumer_disputed": "No",
         "consumer_consent_provided": "Consent provided",
     }

@@ -2,7 +2,7 @@
 
 import logging
 import os
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 from typing import Optional
 
 import requests
@@ -71,9 +71,13 @@ def get_max_date(conn) -> Optional[str]:
     return str(result) if result else None
 
 
-def get_existing_ids(conn) -> set:
+def get_existing_ids(conn, date_from: str) -> set:
     cur = conn.cursor()
-    cur.execute("SELECT complaint_id FROM FINTECH_ANALYTICS.RAW.CFPB_COMPLAINTS")
+    cur.execute(
+        "SELECT complaint_id FROM FINTECH_ANALYTICS.RAW.CFPB_COMPLAINTS "
+        "WHERE date_received >= %s",
+        (date_from,)
+    )
     return {row[0] for row in cur.fetchall()}
 
 
@@ -120,10 +124,10 @@ def parse_complaint(raw: dict) -> tuple:
         raw.get("submitted_via"),
         raw.get("date_sent_to_company"),
         raw.get("company_response_to_consumer"),
-        raw.get("timely"),
+        raw.get("timely_response"),
         raw.get("consumer_disputed"),
         raw.get("consumer_consent_provided"),
-        datetime.utcnow().isoformat(),
+        datetime.now(timezone.utc).isoformat(),
     )
 
 
@@ -152,7 +156,7 @@ def main():
         date_from = BACKFILL_START
         log.info("Empty table — running full backfill from %s.", date_from)
     else:
-        date_from = max_date
+        date_from = str(date.fromisoformat(max_date) + timedelta(days=1))
         log.info("Incremental load from %s.", date_from)
 
     date_to = str(date.today())
@@ -161,7 +165,7 @@ def main():
     raw_complaints = fetch_complaints(date_from, date_to)
     log.info("Fetched %d total complaints from API.", len(raw_complaints))
 
-    existing_ids = get_existing_ids(conn)
+    existing_ids = get_existing_ids(conn, date_from)
     new_rows = [
         parse_complaint(c)
         for c in raw_complaints
