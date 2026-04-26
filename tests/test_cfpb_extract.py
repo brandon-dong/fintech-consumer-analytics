@@ -16,7 +16,7 @@ def test_parse_complaint_maps_all_fields():
         "submitted_via": "Web",
         "date_sent_to_company": "2024-01-16",
         "company_response_to_consumer": "Closed with explanation",
-        "timely_response": "Yes",
+        "timely": "Yes",
         "consumer_disputed": "No",
         "consumer_consent_provided": "Consent provided",
     }
@@ -55,7 +55,7 @@ def test_dedup_filters_existing_ids():
 def test_fetch_stops_when_no_hits(mock_get):
     from extract.cfpb_extract import fetch_complaints
     mock_response = MagicMock()
-    mock_response.json.return_value = {"hits": {"hits": []}}
+    mock_response.json.return_value = []
     mock_get.return_value = mock_response
     result = fetch_complaints("2024-01-01", "2024-01-31")
     assert result == []

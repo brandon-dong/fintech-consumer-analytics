@@ -86,26 +86,17 @@ def fetch_complaints(date_from: str, date_to: str) -> list:
     all_complaints = []
     for product in PRODUCTS:
         log.info("Fetching product: %s", product)
-        offset = 0
-        while True:
-            params = {
-                "date_received_min": date_from,
-                "date_received_max": date_to,
-                "product": product,
-                "format": "json",
-                "size": PAGE_SIZE,
-                "from": offset,
-            }
-            resp = requests.get(CFPB_API_URL, params=params, timeout=60)
-            resp.raise_for_status()
-            hits = resp.json()["hits"]["hits"]
-            if not hits:
-                break
-            all_complaints.extend(h["_source"] for h in hits)
-            offset += len(hits)
-            if len(hits) < PAGE_SIZE:
-                break
-            log.info("  Paginating — fetched %d so far", len(all_complaints))
+        params = {
+            "date_received_min": date_from,
+            "date_received_max": date_to,
+            "product": product,
+            "format": "json",
+        }
+        resp = requests.get(CFPB_API_URL, params=params, timeout=120)
+        resp.raise_for_status()
+        hits = resp.json()
+        all_complaints.extend(h["_source"] for h in hits)
+        log.info("  Got %d complaints", len(hits))
     return all_complaints
 
 
@@ -123,8 +114,8 @@ def parse_complaint(raw: dict) -> tuple:
         raw.get("zip_code"),
         raw.get("submitted_via"),
         raw.get("date_sent_to_company"),
-        raw.get("company_response_to_consumer"),
-        raw.get("timely_response"),
+        raw.get("company_response"),
+        raw.get("timely"),
         raw.get("consumer_disputed"),
         raw.get("consumer_consent_provided"),
         datetime.now(timezone.utc).isoformat(),
