@@ -47,7 +47,7 @@ jobs:
                 user: "$SNOWFLAKE_USER"
                 password: "$SNOWFLAKE_PASSWORD"
                 database: "${SNOWFLAKE_DATABASE:-FINTECH_ANALYTICS}"
-                warehouse: "${SNOWFLAKE_WAREHOUSE:-COMPUTE_WH}"
+                warehouse: "${SNOWFLAKE_WAREHOUSE:-basket_craft_wh}"
                 schema: RAW
                 threads: 4
           EOF
