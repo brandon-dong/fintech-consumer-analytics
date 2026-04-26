@@ -1,0 +1,22 @@
+name: fintech_analytics
+version: '1.0.0'
+config-version: 2
+
+profile: fintech_analytics
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+
+clean-targets:
+  - target
+  - dbt_packages
+
+models:
+  fintech_analytics:
+    staging:
+      +materialized: view
+      +schema: STAGING
+    mart:
+      +materialized: table
+      +schema: MART
