@@ -151,7 +151,7 @@ def main():
         date_from = BACKFILL_START
         log.info("Empty table — running full backfill from %s.", date_from)
     else:
-        date_from = str(date.fromisoformat(max_date) + timedelta(days=1))
+        date_from = str(date.fromisoformat(max_date[:10]) + timedelta(days=1))
         log.info("Incremental load from %s.", date_from)
 
     date_to = str(date.today())
