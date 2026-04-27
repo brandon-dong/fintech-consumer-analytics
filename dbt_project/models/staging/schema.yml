@@ -10,6 +10,8 @@ models:
           - not_null
           - unique
       - name: date_received
+        tests:
+          - not_null
       - name: submitted_via
         tests:
           - accepted_values:

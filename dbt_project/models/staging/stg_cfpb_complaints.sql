@@ -14,7 +14,7 @@ deduped as (
 final as (
     select
         complaint_id,
-        try_to_date(date_received, 'YYYY-MM-DD')            as date_received,
+        try_to_date(left(date_received, 10))                 as date_received,
         product,
         sub_product,
         issue,
@@ -23,7 +23,7 @@ final as (
         state,
         zip_code,
         lower(submitted_via)                                 as submitted_via,
-        try_to_date(date_sent_to_company, 'YYYY-MM-DD')     as date_sent_to_company,
+        try_to_date(left(date_sent_to_company, 10))          as date_sent_to_company,
         company_response_to_consumer,
         case
             when upper(timely_response) = 'YES' then true
