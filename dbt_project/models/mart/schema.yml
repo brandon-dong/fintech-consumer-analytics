@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: dim_product
+    columns:
+      - name: product_key
+        tests:
+          - not_null
+          - unique
+      - name: product_name
+        tests:
+          - not_null
+
+  - name: dim_company
+    columns:
+      - name: company_key
+        tests:
+          - not_null
+          - unique
+      - name: company_name
+        tests:
+          - not_null
+
+  - name: dim_issue
+    columns:
+      - name: issue_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_geography
+    columns:
+      - name: geography_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_date
+    columns:
+      - name: date_key
+        tests:
+          - not_null
+          - unique
+      - name: full_date
+        tests:
+          - not_null
+
+  - name: fact_complaints
+    columns:
+      - name: complaint_key
+        tests:
+          - not_null
+          - unique
+      - name: complaint_id
+        tests:
+          - not_null
+      - name: submitted_via
+        tests:
+          - accepted_values:
+              arguments:
+                values: [web, phone, referral, "postal mail", "web referral"]
