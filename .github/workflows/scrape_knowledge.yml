@@ -1,0 +1,36 @@
+name: Scrape Knowledge Base
+
+on:
+  schedule:
+    # Weekly on Mondays at 7 AM UTC (after extract_cfpb.yml at 6 AM UTC)
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Firecrawl scrape
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: python scrape/firecrawl_scrape.py
+
+      - name: Commit updated knowledge base
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add knowledge/raw/
+          git diff --cached --quiet || git commit -m "chore: refresh knowledge base raw sources [skip ci]"
+          git push
