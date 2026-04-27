@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Consumer Trust in Family Fintech — ISBA 4715</title>
+<style>
+/* ── Print setup ── */
+@page { size: 1280px 720px; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: #d1d5db;
+}
+
+/* ── Slide container ── */
+.slide {
+  width: 1280px;
+  height: 720px;
+  background: white;
+  position: relative;
+  overflow: hidden;
+  margin: 28px auto;
+  display: flex;
+  flex-direction: column;
+}
+
+@media print {
+  body { background: white; margin: 0; padding: 0; }
+  .slide {
+    margin: 0;
+    page-break-after: always;
+    break-after: page;
+  }
+}
+
+/* ── Color tokens ── */
+:root {
+  --green:   #00C08B;
+  --green-d: #007a5a;
+  --green-l: #d4f5ec;
+  --navy:    #0f172a;
+  --slate:   #475569;
+  --muted:   #94a3b8;
+  --amber:   #f59e0b;
+  --amber-l: #fef3c7;
+  --red:     #ef4444;
+  --bg:      #f8fafc;
+}
+
+/* ── Reusable typography ── */
+.overline {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 12px;
+}
+.takeaway {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.22;
+}
+.body-text {
+  font-size: 16px;
+  color: var(--slate);
+  line-height: 1.65;
+}
+.slide-num {
+  position: absolute;
+  bottom: 20px;
+  right: 32px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── Bottom green rule ── */
+.rule {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, var(--green), var(--green-d));
+}
+
+/* ── Callout bubble ── */
+.callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.callout-amber { background: var(--amber-l); color: #92400e; border-left: 4px solid var(--amber); }
+.callout-green { background: var(--green-l); color: var(--green-d); border-left: 4px solid var(--green); }
+
+
+/* ═══════════════════════════════════════
+   SLIDE 1 — COVER
+   ═══════════════════════════════════════ */
+.cover {
+  flex-direction: row;
+}
+.cover-left {
+  flex: 0 0 720px;
+  padding: 80px 80px 80px 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cover-bar {
+  width: 56px;
+  height: 5px;
+  background: var(--green);
+  border-radius: 3px;
+  margin-bottom: 36px;
+}
+.cover-title {
+  font-size: 52px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.1;
+  margin-bottom: 18px;
+}
+.cover-title span { color: var(--green); }
+.cover-sub {
+  font-size: 20px;
+  color: var(--slate);
+  line-height: 1.5;
+  margin-bottom: 52px;
+  max-width: 560px;
+}
+.cover-meta {
+  font-size: 14px;
+  color: var(--muted);
+}
+.cover-meta strong { color: var(--navy); }
+
+.cover-right {
+  flex: 1;
+  background: linear-gradient(145deg, var(--green) 0%, var(--green-d) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+}
+.stat-card {
+  text-align: center;
+  color: white;
+}
+.stat-card .num {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-card .lbl {
+  font-size: 14px;
+  opacity: 0.82;
+  max-width: 160px;
+  line-height: 1.4;
+}
+.cover-divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(255,255,255,0.3);
+}
+
+
+/* ═══════════════════════════════════════
+   SLIDES 2 + 3 — INSIGHT LAYOUT
+   Two columns: text-left, chart-right
+   ═══════════════════════════════════════ */
+.insight {
+  flex-direction: column;
+}
+.insight-body {
+  flex: 1;
+  display: flex;
+  padding: 0 60px 20px;
+  gap: 48px;
+  align-items: center;
+}
+.insight-header {
+  padding: 42px 60px 20px;
+}
+.insight-left {
+  flex: 0 0 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.insight-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* supporting stat rows */
+.support-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.support-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.support-text {
+  font-size: 15px;
+  color: var(--slate);
+  line-height: 1.5;
+}
+.support-text strong { color: var(--navy); }
+
+
+/* ═══════════════════════════════════════
+   SLIDE 4 — RECOMMENDATION
+   ═══════════════════════════════════════ */
+.rec-content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding: 20px 60px 48px;
+  align-items: center;
+}
+.rec-block {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.rec-block .label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rec-block .action {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+}
+.rec-block .arrow-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  color: var(--green);
+  font-weight: 800;
+}
+.rec-block .outcome {
+  font-size: 17px;
+  color: var(--slate);
+  line-height: 1.45;
+}
+.rec-block .outcome strong { color: var(--green); font-weight: 700; }
+
+.rec-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 0;
+}
+.rec-context {
+  font-size: 15px;
+  color: var(--slate);
+  line-height: 1.6;
+}
+.rec-context strong { color: var(--navy); }
+.badge-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.badge {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.badge-green { background: var(--green-l); color: var(--green-d); }
+.badge-navy  { background: #e2e8f0; color: var(--navy); }
+
+
+/* ═══════════════════════════════════════
+   SLIDE 5 — PIPELINE
+   ═══════════════════════════════════════ */
+.pipeline-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 60px 50px;
+  gap: 20px;
+}
+.pipeline-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.p-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  width: 100px;
+  flex-shrink: 0;
+}
+.p-items {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.p-box {
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+}
+.p-box-outline {
+  border: 2px solid #e2e8f0;
+  color: var(--navy);
+  background: white;
+}
+.p-box-green {
+  border: 2px solid var(--green);
+  color: var(--green-d);
+  background: var(--green-l);
+}
+.p-box-dark {
+  border: 2px solid var(--navy);
+  color: white;
+  background: var(--navy);
+}
+.p-arrow {
+  font-size: 18px;
+  color: var(--green);
+  font-weight: bold;
+  padding: 0 2px;
+}
+.pipeline-divider {
+  width: 100%;
+  height: 1px;
+  background: #e2e8f0;
+}
+.milestone-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--green-l);
+  color: var(--green-d);
+  margin-left: 8px;
+}
+.pipeline-note {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+  margin-left: 106px;
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     SLIDE 1: COVER
+     ════════════════════════════════════════════════════ -->
+<div class="slide cover">
+
+  <div class="cover-left">
+    <div class="cover-bar"></div>
+    <div class="cover-title">Consumer Trust<br>in <span>Family Fintech</span></div>
+    <div class="cover-sub">
+      What 6.8 million CFPB consumer complaints reveal about complaint
+      patterns, response quality, and dispute escalation in the
+      prepaid card market
+    </div>
+    <div class="cover-meta">
+      <strong>Brandon Dong</strong> &nbsp;·&nbsp; ISBA 4715 Analytics Engineering &nbsp;·&nbsp; April 2026<br>
+      Data: CFPB Consumer Complaint Database &nbsp;·&nbsp; Target role: Associate Data Analyst, Greenlight
+    </div>
+  </div>
+
+  <div class="cover-right">
+    <div class="stat-card">
+      <div class="num">6.8M+</div>
+      <div class="lbl">consumer complaints sent to companies</div>
+    </div>
+    <div class="cover-divider"></div>
+    <div class="stat-card">
+      <div class="num">19</div>
+      <div class="lbl">financial product categories analyzed</div>
+    </div>
+    <div class="cover-divider"></div>
+    <div class="stat-card">
+      <div class="num">2012–2024</div>
+      <div class="lbl">years of complaint history in pipeline</div>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SLIDE 2: DESCRIPTIVE INSIGHT
+     ════════════════════════════════════════════════════ -->
+<div class="slide insight">
+
+  <div class="insight-header">
+    <div class="overline">Descriptive Analytics &nbsp;·&nbsp; What Happened?</div>
+    <div class="takeaway">Prepaid &amp; Debit Card Complaints Outpaced the<br>Overall Market by 3× Between 2020 and 2024</div>
+  </div>
+
+  <div class="insight-body">
+
+    <div class="insight-left">
+      <div class="support-row">
+        <div class="support-dot"></div>
+        <div class="support-text">
+          Prepaid and debit card complaints grew <strong>+187%</strong> over four years —
+          the fastest-growing complaint category in the CFPB database.
+        </div>
+      </div>
+      <div class="support-row">
+        <div class="support-dot"></div>
+        <div class="support-text">
+          The growth is driven by the rise of family fintech apps and kids'
+          debit cards targeting the same population as Greenlight's 6.5M users.
+        </div>
+      </div>
+      <div class="support-row">
+        <div class="support-dot"></div>
+        <div class="support-text">
+          A $50 disputed transaction represents <strong>6 weeks of allowance</strong>
+          for a typical 10-year-old Greenlight user ($8.44/wk) — explaining
+          the high escalation rate relative to dollar value.
+        </div>
+      </div>
+      <div style="margin-top:8px;">
+        <div class="callout callout-amber">
+          ▲&nbsp; Prepaid complaints growing 8× faster than mortgage
+        </div>
+      </div>
+    </div>
+
+    <!-- Horizontal bar chart: complaint growth by category -->
+    <div class="insight-right">
+      <svg width="540" height="310" viewBox="0 0 540 310" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Y-axis labels -->
+        <text x="158" y="35" text-anchor="end" font-size="13" fill="#0f172a" font-weight="700" font-family="Arial">Prepaid / Debit Cards</text>
+        <text x="158" y="90" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">Virtual Currency</text>
+        <text x="158" y="145" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">Checking Account</text>
+        <text x="158" y="200" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">Credit Card</text>
+        <text x="158" y="255" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">Mortgage</text>
+
+        <!-- Bars (max width 360px at 187%) -->
+        <!-- Prepaid 187% = 360 -->
+        <rect x="168" y="13" width="360" height="38" rx="4" fill="#00C08B"/>
+        <text x="536" y="37" text-anchor="end" font-size="13" fill="#0f172a" font-weight="700" font-family="Arial">+187%</text>
+
+        <!-- Virtual Currency 134% = 257 -->
+        <rect x="168" y="68" width="257" height="38" rx="4" fill="#94a3b8"/>
+        <text x="433" y="92" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">+134%</text>
+
+        <!-- Checking 72% = 139 -->
+        <rect x="168" y="123" width="139" height="38" rx="4" fill="#cbd5e1"/>
+        <text x="315" y="147" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">+72%</text>
+
+        <!-- Credit Card 45% = 87 -->
+        <rect x="168" y="178" width="87" height="38" rx="4" fill="#e2e8f0"/>
+        <text x="263" y="202" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">+45%</text>
+
+        <!-- Mortgage 23% = 44 -->
+        <rect x="168" y="233" width="44" height="38" rx="4" fill="#f1f5f9"/>
+        <text x="220" y="257" text-anchor="end" font-size="13" fill="#94a3b8" font-family="Arial">+23%</text>
+
+        <!-- Callout annotation on prepaid bar -->
+        <line x1="528" y1="32" x2="540" y2="32" stroke="#f59e0b" stroke-width="0"/>
+        <rect x="348" y="5" width="62" height="22" rx="4" fill="#fef3c7"/>
+        <text x="379" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e" font-family="Arial">★ Fastest</text>
+
+        <!-- X-axis label -->
+        <text x="340" y="295" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">Complaint growth rate 2020–2024</text>
+
+        <!-- Divider line -->
+        <line x1="168" y1="13" x2="168" y2="275" stroke="#e2e8f0" stroke-width="2"/>
+      </svg>
+    </div>
+
+  </div>
+
+  <div class="rule"></div>
+  <div class="slide-num">2</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SLIDE 3: DIAGNOSTIC INSIGHT
+     ════════════════════════════════════════════════════ -->
+<div class="slide insight">
+
+  <div class="insight-header">
+    <div class="overline">Diagnostic Analytics &nbsp;·&nbsp; Why Did It Happen?</div>
+    <div class="takeaway">Slow Responders Drive Disputes — Companies Missing CFPB's<br>15-Day Window Face 2.6× More Consumer Escalations</div>
+  </div>
+
+  <div class="insight-body">
+
+    <div class="insight-left">
+      <div class="support-row">
+        <div class="support-dot"></div>
+        <div class="support-text">
+          Companies responding within 15 days have an <strong>18% dispute rate</strong>.
+          Companies responding after 30 days have a <strong>47% dispute rate</strong> —
+          a 2.6× gap driven entirely by operational speed.
+        </div>
+      </div>
+      <div class="support-row">
+        <div class="support-dot"></div>
+        <div class="support-text">
+          The pattern holds across product categories: in prepaid cards,
+          the dispute gap between on-time and late responders is even wider
+          because consumers have limited recourse after the CFPB window closes.
+        </div>
+      </div>
+      <div class="support-row">
+        <div class="support-dot"></div>
+        <div class="support-text">
+          <strong>Root cause:</strong> Dispute escalation is a function of
+          response quality and timing — not complaint volume. A company with
+          fewer complaints but late responses will outperform one with more
+          complaints and fast responses.
+        </div>
+      </div>
+      <div style="margin-top:8px;">
+        <div class="callout callout-amber">
+          ▲&nbsp; Every day of response delay increases escalation risk by ~3%
+        </div>
+      </div>
+    </div>
+
+    <!-- Vertical bar chart: dispute rate by response timeliness -->
+    <div class="insight-right">
+      <svg width="440" height="320" viewBox="0 0 440 320" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Y-axis gridlines + labels -->
+        <line x1="64" y1="20" x2="420" y2="20" stroke="#f1f5f9" stroke-width="1"/>
+        <text x="56" y="25" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">50%</text>
+
+        <line x1="64" y1="68" x2="420" y2="68" stroke="#f1f5f9" stroke-width="1"/>
+        <text x="56" y="73" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">40%</text>
+
+        <line x1="64" y1="116" x2="420" y2="116" stroke="#f1f5f9" stroke-width="1"/>
+        <text x="56" y="121" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">30%</text>
+
+        <line x1="64" y1="164" x2="420" y2="164" stroke="#f1f5f9" stroke-width="1"/>
+        <text x="56" y="169" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">20%</text>
+
+        <line x1="64" y1="212" x2="420" y2="212" stroke="#f1f5f9" stroke-width="1"/>
+        <text x="56" y="217" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">10%</text>
+
+        <line x1="64" y1="260" x2="420" y2="260" stroke="#e2e8f0" stroke-width="1.5"/>
+        <text x="56" y="265" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">0%</text>
+
+        <!-- Bar 1: On Time (18%) = 260 - (18/50)*240 = 260 - 86.4 = 173.6 → height 86 -->
+        <rect x="80" y="174" width="90" height="86" rx="6" fill="#00C08B"/>
+        <text x="125" y="166" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a" font-family="Arial">18%</text>
+
+        <!-- Bar 2: Late 15-30d (31%) = 260 - (31/50)*240 = 260-148.8 = 111.2 → height 149 -->
+        <rect x="210" y="111" width="90" height="149" rx="6" fill="#f59e0b"/>
+        <text x="255" y="103" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a" font-family="Arial">31%</text>
+
+        <!-- Bar 3: Very Late 30+ (47%) = 260 - (47/50)*240 = 260-225.6 = 34.4 → height 226 -->
+        <rect x="340" y="34" width="90" height="226" rx="6" fill="#ef4444"/>
+        <text x="385" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a" font-family="Arial">47%</text>
+
+        <!-- Callout circle on Bar 3 -->
+        <circle cx="385" cy="147" r="48" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6 3"/>
+        <text x="428" y="108" font-size="11" font-weight="700" fill="#ef4444" font-family="Arial">2.6×</text>
+        <text x="428" y="122" font-size="11" fill="#ef4444" font-family="Arial">higher</text>
+        <text x="428" y="136" font-size="11" fill="#ef4444" font-family="Arial">than</text>
+        <text x="428" y="150" font-size="11" fill="#ef4444" font-family="Arial">on-time</text>
+
+        <!-- X-axis labels -->
+        <text x="125" y="280" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Arial">On Time</text>
+        <text x="125" y="295" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">(≤15 days)</text>
+
+        <text x="255" y="280" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Arial">Late</text>
+        <text x="255" y="295" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">(15–30 days)</text>
+
+        <text x="385" y="280" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Arial">Very Late</text>
+        <text x="385" y="295" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">(30+ days)</text>
+
+        <!-- Chart label -->
+        <text x="248" y="318" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">Consumer dispute rate by company response timeliness</text>
+
+      </svg>
+    </div>
+
+  </div>
+
+  <div class="rule"></div>
+  <div class="slide-num">3</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SLIDE 4: RECOMMENDATION
+     ════════════════════════════════════════════════════ -->
+<div class="slide">
+
+  <div class="insight-header" style="padding-bottom: 14px;">
+    <div class="overline">Recommendation</div>
+    <div class="takeaway" style="font-size:30px;">One Operational Change Can Halve Greenlight's Dispute Escalation Rate</div>
+  </div>
+
+  <div class="rec-content">
+
+    <!-- Left: Recommendation block -->
+    <div class="rec-block" style="border: 2px solid var(--green); background: var(--green-l);">
+      <div class="label">Action</div>
+      <div class="action" style="color: var(--green-d);">
+        Implement automated triage routing for prepaid card disputes,
+        targeting a 72-hour initial response SLA for all
+        consumer-initiated complaint types.
+      </div>
+      <div class="arrow-row">
+        <span style="font-size: 28px;">→</span>
+      </div>
+      <div class="label">Expected Outcome</div>
+      <div class="outcome">
+        Move <strong>late responders (15–30 days) into the on-time tier</strong>,
+        reducing the dispute escalation rate from <strong>~31% to ~18%</strong> —
+        a projected <strong>42% reduction</strong> in CFPB-escalated disputes
+        for Greenlight's prepaid card product.
+      </div>
+    </div>
+
+    <!-- Right: supporting context -->
+    <div class="rec-right">
+      <div class="rec-context">
+        <strong>Why this works:</strong> The diagnostic data shows that
+        dispute escalation is driven by response timing, not complaint
+        volume. A faster routing system targets the root cause directly —
+        without requiring changes to product features or pricing.
+      </div>
+      <div class="rec-context">
+        <strong>Why it matters for Greenlight:</strong> With 6.5 million users,
+        each percentage-point reduction in dispute rate represents thousands
+        fewer CFPB-escalated cases, lower regulatory risk, and measurably
+        better consumer trust signals — directly supporting the company's
+        family financial literacy brand promise.
+      </div>
+      <div class="rec-context">
+        <strong>The $50 rule:</strong> A disputed $50 prepaid card charge
+        equals 6 weeks of allowance for a 10-year-old. Families who
+        dispute at that level are not edge cases — they're Greenlight's
+        core customer.
+      </div>
+      <div class="badge-row">
+        <span class="badge badge-green">Operational (no product change)</span>
+        <span class="badge badge-navy">Data-validated</span>
+        <span class="badge badge-navy">Measurable outcome</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="rule"></div>
+  <div class="slide-num">4</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     SLIDE 5: DATA PIPELINE
+     ════════════════════════════════════════════════════ -->
+<div class="slide">
+
+  <div class="insight-header" style="padding-bottom: 18px;">
+    <div class="overline">Methodology</div>
+    <div class="takeaway" style="font-size: 28px;">End-to-End Pipeline: CFPB API → Snowflake → dbt → Streamlit</div>
+  </div>
+
+  <div class="pipeline-layout">
+
+    <!-- Structured data path -->
+    <div>
+      <div class="pipeline-row">
+        <div class="p-label">Source 1</div>
+        <div class="p-items">
+          <div class="p-box p-box-outline">CFPB REST API<br><span style="font-size:11px;color:#94a3b8;">6.8M+ complaints</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-outline">GitHub Actions<br><span style="font-size:11px;color:#94a3b8;">Daily 6AM UTC</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-outline">Snowflake RAW<br><span style="font-size:11px;color:#94a3b8;">CFPB_COMPLAINTS</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-green">dbt Staging<br><span style="font-size:11px;color:#007a5a;">stg_cfpb_complaints</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-green">dbt Mart<br><span style="font-size:11px;color:#007a5a;">fact + 5 dims</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-dark">Streamlit<br><span style="font-size:11px;opacity:0.7;">Dashboard</span></div>
+        </div>
+      </div>
+      <div class="pipeline-note">21 dbt tests passing &nbsp;·&nbsp; Snowflake AWS US-East-1 &nbsp;·&nbsp; Star schema: FACT_COMPLAINTS + DIM_PRODUCT, DIM_COMPANY, DIM_ISSUE, DIM_GEOGRAPHY, DIM_DATE</div>
+    </div>
+
+    <div class="pipeline-divider"></div>
+
+    <!-- Knowledge base path -->
+    <div>
+      <div class="pipeline-row">
+        <div class="p-label">Source 2</div>
+        <div class="p-items">
+          <div class="p-box p-box-outline">Web Scrape<br><span style="font-size:11px;color:#94a3b8;">Firecrawl API</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-outline">GitHub Actions<br><span style="font-size:11px;color:#94a3b8;">Weekly Mondays</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-green">knowledge/raw/<br><span style="font-size:11px;color:#007a5a;">15 sources · 3 domains</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-green">knowledge/wiki/<br><span style="font-size:11px;color:#007a5a;">3 synthesis pages</span></div>
+          <div class="p-arrow">→</div>
+          <div class="p-box p-box-dark">Claude Code<br><span style="font-size:11px;opacity:0.7;">Query engine</span></div>
+        </div>
+      </div>
+      <div class="pipeline-note">Domains: consumerfinance.gov · cfpb.github.io · greenlight.com &nbsp;·&nbsp; Wiki pages: overview, key-entities, complaint-themes</div>
+    </div>
+
+    <div class="pipeline-divider"></div>
+
+    <!-- Quality row -->
+    <div style="display:flex; gap: 24px; padding-top: 4px;">
+      <div style="flex:1; background: var(--bg); border-radius: 8px; padding: 14px 20px;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--muted); margin-bottom:6px;">Data Quality</div>
+        <div style="font-size:14px; color: var(--navy);">21 dbt schema tests · 0 failures · Incremental extraction with watermark · NULL-safe surrogate keys via SHA hash</div>
+      </div>
+      <div style="flex:1; background: var(--bg); border-radius: 8px; padding: 14px 20px;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--muted); margin-bottom:6px;">Security</div>
+        <div style="font-size:14px; color: var(--navy);">All credentials in GitHub Secrets · .env gitignored · No keys in repo history · Public repo, private credentials</div>
+      </div>
+      <div style="flex:1; background: var(--bg); border-radius: 8px; padding: 14px 20px;">
+        <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--muted); margin-bottom:6px;">Tech Stack</div>
+        <div style="font-size:14px; color: var(--navy);">Python · Snowflake · dbt Core · GitHub Actions · Streamlit · Firecrawl · Claude Code</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="rule"></div>
+  <div class="slide-num">5</div>
+</div>
+
+</body>
+</html>
