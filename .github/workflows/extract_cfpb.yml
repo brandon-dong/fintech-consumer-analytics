@@ -53,7 +53,7 @@ jobs:
           EOF
 
       - name: Run dbt
-        run: python -m dbt run --project-dir dbt_project
+        run: dbt run --project-dir dbt_project
 
       - name: Test dbt
-        run: python -m dbt test --project-dir dbt_project
+        run: dbt test --project-dir dbt_project
