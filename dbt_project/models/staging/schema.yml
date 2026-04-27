@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_cfpb_complaints
+    description: Cleaned and type-cast CFPB consumer complaints
+    columns:
+      - name: complaint_id
+        description: CFPB natural key
+        tests:
+          - not_null
+          - unique
+      - name: date_received
+      - name: submitted_via
+        tests:
+          - accepted_values:
+              arguments:
+                values: [web, phone, referral, "postal mail", "web referral"]

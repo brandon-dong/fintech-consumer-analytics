@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    database: FINTECH_ANALYTICS
+    schema: RAW
+    tables:
+      - name: cfpb_complaints
+        description: Raw CFPB consumer complaints loaded from API
