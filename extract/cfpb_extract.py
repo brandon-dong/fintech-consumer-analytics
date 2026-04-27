@@ -134,8 +134,12 @@ def load_to_snowflake(conn, rows: list) -> None:
             consumer_consent_provided, loaded_at
         ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
     """
-    conn.cursor().executemany(sql, rows)
-    log.info("Inserted %d rows.", len(rows))
+    batch_size = 10_000
+    for i in range(0, len(rows), batch_size):
+        batch = rows[i : i + batch_size]
+        conn.cursor().executemany(sql, batch)
+        log.info("Inserted batch %d / %d", i // batch_size + 1, -(-len(rows) // batch_size))
+    log.info("Inserted %d rows total.", len(rows))
 
 
 def main():
