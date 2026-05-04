@@ -43,7 +43,7 @@ SQL_BY_PRODUCT = f"""
 """
 
 SQL_CHANNELS = f"""
-    SELECT COALESCE(f.submitted_via, 'unknown') AS channel,
+    SELECT LOWER(COALESCE(f.submitted_via, 'unknown')) AS channel,
            COUNT(*) AS complaint_count
     FROM {_MART}.FACT_COMPLAINTS f
     JOIN {_MART}.DIM_DATE dd    ON f.date_key    = dd.date_key
@@ -217,6 +217,8 @@ with tab1:
         )
         fig2.update_layout(yaxis={"categoryorder": "total ascending"})
         st.plotly_chart(fig2, use_container_width=True)
+    else:
+        st.warning("No data for the selected filters.")
 
     st.divider()
 
@@ -235,6 +237,8 @@ with tab1:
         )
         fig3.update_layout(yaxis={"categoryorder": "total ascending"})
         st.plotly_chart(fig3, use_container_width=True)
+    else:
+        st.warning("No data for the selected filters.")
 
 with tab2:
     st.info("Resolution Quality charts coming soon.")
