@@ -98,6 +98,7 @@ body {
 }
 .callout-amber { background: var(--amber-l); color: #92400e; border-left: 4px solid var(--amber); }
 .callout-green { background: var(--green-l); color: var(--green-d); border-left: 4px solid var(--green); }
+.callout-red   { background: #fee2e2; color: #991b1b; border-left: 4px solid var(--red); }
 
 
 /* ═══════════════════════════════════════
@@ -363,16 +364,6 @@ body {
   height: 1px;
   background: #e2e8f0;
 }
-.milestone-tag {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 700;
-  background: var(--green-l);
-  color: var(--green-d);
-  margin-left: 8px;
-}
 .pipeline-note {
   font-size: 13px;
   color: var(--muted);
@@ -392,29 +383,29 @@ body {
     <div class="cover-bar"></div>
     <div class="cover-title">Consumer Trust<br>in <span>Family Fintech</span></div>
     <div class="cover-sub">
-      What 6.8 million CFPB consumer complaints reveal about complaint
-      patterns, response quality, and dispute escalation in the
-      prepaid card market
+      What 4M+ CFPB consumer complaints reveal about complaint
+      volume, response quality, and escalation patterns in
+      checking accounts, prepaid cards, and digital payments
     </div>
     <div class="cover-meta">
-      <strong>Brandon Dong</strong> &nbsp;·&nbsp; ISBA 4715 Analytics Engineering &nbsp;·&nbsp; April 2026<br>
+      <strong>Brandon Dong</strong> &nbsp;·&nbsp; ISBA 4715 Analytics Engineering &nbsp;·&nbsp; May 2026<br>
       Data: CFPB Consumer Complaint Database &nbsp;·&nbsp; Target role: Associate Data Analyst, Greenlight
     </div>
   </div>
 
   <div class="cover-right">
     <div class="stat-card">
-      <div class="num">6.8M+</div>
-      <div class="lbl">consumer complaints sent to companies</div>
+      <div class="num">212,760</div>
+      <div class="lbl">complaints for the top fintech product category</div>
     </div>
     <div class="cover-divider"></div>
     <div class="stat-card">
-      <div class="num">19</div>
-      <div class="lbl">financial product categories analyzed</div>
+      <div class="num">90%</div>
+      <div class="lbl">of complaints filed via web portal</div>
     </div>
     <div class="cover-divider"></div>
     <div class="stat-card">
-      <div class="num">2012–2024</div>
+      <div class="num">2012–2025</div>
       <div class="lbl">years of complaint history in pipeline</div>
     </div>
   </div>
@@ -430,7 +421,7 @@ body {
 
   <div class="insight-header">
     <div class="overline">Descriptive Analytics &nbsp;·&nbsp; What Happened?</div>
-    <div class="takeaway">Prepaid &amp; Debit Card Complaints Outpaced the<br>Overall Market by 3× Between 2020 and 2024</div>
+    <div class="takeaway">Checking and Savings Account Leads All Fintech Products<br>at 212,760 Complaints — Peaking at 70,316 in January 2025</div>
   </div>
 
   <div class="insight-body">
@@ -439,74 +430,65 @@ body {
       <div class="support-row">
         <div class="support-dot"></div>
         <div class="support-text">
-          Prepaid and debit card complaints grew <strong>+187%</strong> over four years —
-          the fastest-growing complaint category in the CFPB database.
+          Checking and savings account complaints outpace every other fintech
+          product category — reflecting the breadth of everyday banking
+          touchpoints where consumers escalate to the CFPB.
         </div>
       </div>
       <div class="support-row">
         <div class="support-dot"></div>
         <div class="support-text">
-          The growth is driven by the rise of family fintech apps and kids'
-          debit cards targeting the same population as Greenlight's 6.5M users.
+          <strong>90% of all complaints</strong> are filed via the CFPB's web
+          portal, confirming that fintech's digitally native customer base
+          is equally comfortable escalating online.
         </div>
       </div>
       <div class="support-row">
         <div class="support-dot"></div>
         <div class="support-text">
-          A $50 disputed transaction represents <strong>6 weeks of allowance</strong>
-          for a typical 10-year-old Greenlight user ($8.44/wk) — explaining
-          the high escalation rate relative to dollar value.
+          The January 2025 peak of <strong>70,316 complaints</strong> in a single
+          month signals post-holiday account management stress — disputes over
+          charges, access issues, and account closures spike each January.
         </div>
       </div>
       <div style="margin-top:8px;">
         <div class="callout callout-amber">
-          ▲&nbsp; Prepaid complaints growing 8× faster than mortgage
+          ▲&nbsp; 70,316 complaints filed in January 2025 alone
         </div>
       </div>
     </div>
 
-    <!-- Horizontal bar chart: complaint growth by category -->
+    <!-- Three metric cards -->
     <div class="insight-right">
-      <svg width="540" height="310" viewBox="0 0 540 310" xmlns="http://www.w3.org/2000/svg">
+      <svg width="460" height="310" viewBox="0 0 460 310" xmlns="http://www.w3.org/2000/svg">
 
-        <!-- Y-axis labels -->
-        <text x="158" y="35" text-anchor="end" font-size="13" fill="#0f172a" font-weight="700" font-family="Arial">Prepaid / Debit Cards</text>
-        <text x="158" y="90" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">Virtual Currency</text>
-        <text x="158" y="145" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">Checking Account</text>
-        <text x="158" y="200" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">Credit Card</text>
-        <text x="158" y="255" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">Mortgage</text>
+        <!-- Card 1: 212,760 -->
+        <rect x="0" y="0" width="446" height="88" rx="12" fill="#d4f5ec" stroke="#00C08B" stroke-width="2"/>
+        <text x="20" y="24" font-size="10" font-weight="700" fill="#007a5a" font-family="Arial" letter-spacing="1.5">TOP PRODUCT · TOTAL COMPLAINTS</text>
+        <text x="20" y="68" font-size="50" font-weight="800" fill="#0f172a" font-family="Arial">212,760</text>
+        <text x="310" y="68" font-size="13" fill="#007a5a" font-family="Arial" font-weight="600">checking &amp;</text>
+        <text x="310" y="84" font-size="13" fill="#007a5a" font-family="Arial" font-weight="600">savings account</text>
+        <!-- Star callout -->
+        <rect x="390" y="4" width="52" height="22" rx="5" fill="#00C08B"/>
+        <text x="416" y="19" text-anchor="middle" font-size="11" font-weight="700" fill="white" font-family="Arial">#1</text>
 
-        <!-- Bars (max width 360px at 187%) -->
-        <!-- Prepaid 187% = 360 -->
-        <rect x="168" y="13" width="360" height="38" rx="4" fill="#00C08B"/>
-        <text x="536" y="37" text-anchor="end" font-size="13" fill="#0f172a" font-weight="700" font-family="Arial">+187%</text>
+        <!-- Card 2: Peak month -->
+        <rect x="0" y="106" width="446" height="88" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="20" y="130" font-size="10" font-weight="700" fill="#92400e" font-family="Arial" letter-spacing="1.5">PEAK MONTH · JANUARY 2025</text>
+        <text x="20" y="174" font-size="50" font-weight="800" fill="#0f172a" font-family="Arial">70,316</text>
+        <text x="298" y="174" font-size="13" fill="#92400e" font-family="Arial" font-weight="600">complaints in</text>
+        <text x="298" y="190" font-size="13" fill="#92400e" font-family="Arial" font-weight="600">a single month</text>
 
-        <!-- Virtual Currency 134% = 257 -->
-        <rect x="168" y="68" width="257" height="38" rx="4" fill="#94a3b8"/>
-        <text x="433" y="92" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">+134%</text>
-
-        <!-- Checking 72% = 139 -->
-        <rect x="168" y="123" width="139" height="38" rx="4" fill="#cbd5e1"/>
-        <text x="315" y="147" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">+72%</text>
-
-        <!-- Credit Card 45% = 87 -->
-        <rect x="168" y="178" width="87" height="38" rx="4" fill="#e2e8f0"/>
-        <text x="263" y="202" text-anchor="end" font-size="13" fill="#475569" font-family="Arial">+45%</text>
-
-        <!-- Mortgage 23% = 44 -->
-        <rect x="168" y="233" width="44" height="38" rx="4" fill="#f1f5f9"/>
-        <text x="220" y="257" text-anchor="end" font-size="13" fill="#94a3b8" font-family="Arial">+23%</text>
-
-        <!-- Callout annotation on prepaid bar -->
-        <line x1="528" y1="32" x2="540" y2="32" stroke="#f59e0b" stroke-width="0"/>
-        <rect x="348" y="5" width="62" height="22" rx="4" fill="#fef3c7"/>
-        <text x="379" y="20" text-anchor="middle" font-size="11" font-weight="700" fill="#92400e" font-family="Arial">★ Fastest</text>
-
-        <!-- X-axis label -->
-        <text x="340" y="295" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">Complaint growth rate 2020–2024</text>
-
-        <!-- Divider line -->
-        <line x1="168" y1="13" x2="168" y2="275" stroke="#e2e8f0" stroke-width="2"/>
+        <!-- Card 3: Web channel -->
+        <rect x="0" y="212" width="446" height="88" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+        <text x="20" y="236" font-size="10" font-weight="700" fill="#475569" font-family="Arial" letter-spacing="1.5">SUBMISSION CHANNEL</text>
+        <text x="20" y="280" font-size="50" font-weight="800" fill="#0f172a" font-family="Arial">90%</text>
+        <text x="160" y="266" font-size="13" fill="#475569" font-family="Arial">filed via</text>
+        <text x="160" y="282" font-size="13" fill="#475569" font-family="Arial">web portal</text>
+        <!-- Mini donut -->
+        <circle cx="380" cy="256" r="30" fill="none" stroke="#e2e8f0" stroke-width="12"/>
+        <circle cx="380" cy="256" r="30" fill="none" stroke="#00C08B" stroke-width="12"
+                stroke-dasharray="169.6 18.8" stroke-dashoffset="47.1" transform="rotate(-90 380 256)"/>
       </svg>
     </div>
 
@@ -524,7 +506,7 @@ body {
 
   <div class="insight-header">
     <div class="overline">Diagnostic Analytics &nbsp;·&nbsp; Why Did It Happen?</div>
-    <div class="takeaway">Slow Responders Drive Disputes — Companies Missing CFPB's<br>15-Day Window Face 2.6× More Consumer Escalations</div>
+    <div class="takeaway">Greenlight Is 15× More Likely to Miss CFPB's Response Window —<br>Account Management Failures Drive 37% of Its Complaints</div>
   </div>
 
   <div class="insight-body">
@@ -533,90 +515,91 @@ body {
       <div class="support-row">
         <div class="support-dot"></div>
         <div class="support-text">
-          Companies responding within 15 days have an <strong>18% dispute rate</strong>.
-          Companies responding after 30 days have a <strong>47% dispute rate</strong> —
-          a 2.6× gap driven entirely by operational speed.
+          The fintech sector floor (money transfer products) misses CFPB's
+          15-day response window just <strong>1.4% of the time</strong>. Greenlight
+          misses it <strong>21.1% of the time</strong> — a 15× gap versus the
+          best-in-class benchmark.
         </div>
       </div>
       <div class="support-row">
         <div class="support-dot"></div>
         <div class="support-text">
-          The pattern holds across product categories: in prepaid cards,
-          the dispute gap between on-time and late responders is even wider
-          because consumers have limited recourse after the CFPB window closes.
+          <strong>"Managing an account"</strong> is Greenlight's #1 complaint issue,
+          representing 7 of its 19 CFPB complaints (37%) — signaling
+          gaps in account support workflows, not product defects.
         </div>
       </div>
       <div class="support-row">
         <div class="support-dot"></div>
         <div class="support-text">
-          <strong>Root cause:</strong> Dispute escalation is a function of
-          response quality and timing — not complaint volume. A company with
-          fewer complaints but late responses will outperform one with more
-          complaints and fast responses.
+          Account closures, fraud/scam resolution, and onboarding problems
+          round out Greenlight's complaint profile — all categories where
+          faster triage and routing would directly reduce escalation.
         </div>
       </div>
       <div style="margin-top:8px;">
-        <div class="callout callout-amber">
-          ▲&nbsp; Every day of response delay increases escalation risk by ~3%
+        <div class="callout callout-red">
+          ▲&nbsp; 21.1% late-response rate — 15× above the sector floor
         </div>
       </div>
     </div>
 
-    <!-- Vertical bar chart: dispute rate by response timeliness -->
+    <!-- Late response rate comparison chart -->
     <div class="insight-right">
-      <svg width="440" height="320" viewBox="0 0 440 320" xmlns="http://www.w3.org/2000/svg">
+      <svg width="500" height="280" viewBox="0 0 500 280" xmlns="http://www.w3.org/2000/svg">
 
-        <!-- Y-axis gridlines + labels -->
-        <line x1="64" y1="20" x2="420" y2="20" stroke="#f1f5f9" stroke-width="1"/>
-        <text x="56" y="25" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">50%</text>
+        <!-- Chart subtitle -->
+        <text x="310" y="18" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">% of complaints where company missed CFPB's 15-day response window</text>
 
-        <line x1="64" y1="68" x2="420" y2="68" stroke="#f1f5f9" stroke-width="1"/>
-        <text x="56" y="73" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">40%</text>
-
-        <line x1="64" y1="116" x2="420" y2="116" stroke="#f1f5f9" stroke-width="1"/>
-        <text x="56" y="121" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">30%</text>
-
-        <line x1="64" y1="164" x2="420" y2="164" stroke="#f1f5f9" stroke-width="1"/>
-        <text x="56" y="169" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">20%</text>
-
-        <line x1="64" y1="212" x2="420" y2="212" stroke="#f1f5f9" stroke-width="1"/>
-        <text x="56" y="217" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">10%</text>
-
-        <line x1="64" y1="260" x2="420" y2="260" stroke="#e2e8f0" stroke-width="1.5"/>
-        <text x="56" y="265" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">0%</text>
-
-        <!-- Bar 1: On Time (18%) = 260 - (18/50)*240 = 260 - 86.4 = 173.6 → height 86 -->
-        <rect x="80" y="174" width="90" height="86" rx="6" fill="#00C08B"/>
-        <text x="125" y="166" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a" font-family="Arial">18%</text>
-
-        <!-- Bar 2: Late 15-30d (31%) = 260 - (31/50)*240 = 260-148.8 = 111.2 → height 149 -->
-        <rect x="210" y="111" width="90" height="149" rx="6" fill="#f59e0b"/>
-        <text x="255" y="103" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a" font-family="Arial">31%</text>
-
-        <!-- Bar 3: Very Late 30+ (47%) = 260 - (47/50)*240 = 260-225.6 = 34.4 → height 226 -->
-        <rect x="340" y="34" width="90" height="226" rx="6" fill="#ef4444"/>
-        <text x="385" y="26" text-anchor="middle" font-size="15" font-weight="700" fill="#0f172a" font-family="Arial">47%</text>
-
-        <!-- Callout circle on Bar 3 -->
-        <circle cx="385" cy="147" r="48" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="6 3"/>
-        <text x="428" y="108" font-size="11" font-weight="700" fill="#ef4444" font-family="Arial">2.6×</text>
-        <text x="428" y="122" font-size="11" fill="#ef4444" font-family="Arial">higher</text>
-        <text x="428" y="136" font-size="11" fill="#ef4444" font-family="Arial">than</text>
-        <text x="428" y="150" font-size="11" fill="#ef4444" font-family="Arial">on-time</text>
+        <!-- Gridlines (0% to 25%, scale: 14.4px per 1%, origin x=120) -->
+        <line x1="120" y1="32" x2="120" y2="210" stroke="#cbd5e1" stroke-width="1.5"/>
+        <line x1="192" y1="32" x2="192" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+        <line x1="264" y1="32" x2="264" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+        <line x1="336" y1="32" x2="336" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+        <line x1="408" y1="32" x2="408" y2="210" stroke="#f1f5f9" stroke-width="1"/>
+        <line x1="480" y1="32" x2="480" y2="210" stroke="#f1f5f9" stroke-width="1"/>
 
         <!-- X-axis labels -->
-        <text x="125" y="280" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Arial">On Time</text>
-        <text x="125" y="295" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">(≤15 days)</text>
+        <text x="120" y="228" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">0%</text>
+        <text x="192" y="228" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">5%</text>
+        <text x="264" y="228" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">10%</text>
+        <text x="336" y="228" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">15%</text>
+        <text x="408" y="228" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">20%</text>
+        <text x="480" y="228" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">25%</text>
 
-        <text x="255" y="280" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Arial">Late</text>
-        <text x="255" y="295" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">(15–30 days)</text>
+        <!-- Y-axis labels -->
+        <text x="112" y="76" text-anchor="end" font-size="12" fill="#475569" font-family="Arial">Sector floor</text>
+        <text x="112" y="91" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">(Money transfer)</text>
 
-        <text x="385" y="280" text-anchor="middle" font-size="12" fill="#0f172a" font-weight="600" font-family="Arial">Very Late</text>
-        <text x="385" y="295" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">(30+ days)</text>
+        <text x="112" y="158" text-anchor="end" font-size="13" fill="#0f172a" font-weight="700" font-family="Arial">Greenlight</text>
+        <text x="112" y="173" text-anchor="end" font-size="11" fill="#94a3b8" font-family="Arial">Financial Tech.</text>
 
-        <!-- Chart label -->
-        <text x="248" y="318" text-anchor="middle" font-size="11" fill="#94a3b8" font-family="Arial">Consumer dispute rate by company response timeliness</text>
+        <!-- Bar 1: Sector floor 1.4% → 1.4 × 14.4 = 20px -->
+        <rect x="120" y="57" width="20" height="36" rx="4" fill="#94a3b8"/>
+        <text x="148" y="80" font-size="13" font-weight="700" fill="#475569" font-family="Arial">1.4%</text>
 
+        <!-- Bar 2: Greenlight 21.1% → 21.1 × 14.4 = 304px -->
+        <rect x="120" y="139" width="304" height="36" rx="4" fill="#ef4444"/>
+        <text x="432" y="163" font-size="13" font-weight="700" fill="#0f172a" font-family="Arial">21.1%</text>
+
+        <!-- 15× callout badge -->
+        <rect x="430" y="90" width="58" height="56" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+        <text x="459" y="115" text-anchor="middle" font-size="22" font-weight="800" fill="#ef4444" font-family="Arial">15×</text>
+        <text x="459" y="135" text-anchor="middle" font-size="11" fill="#991b1b" font-family="Arial">higher</text>
+
+        <!-- Bracket lines connecting bars to badge -->
+        <line x1="430" y1="100" x2="420" y2="100" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <line x1="420" y1="100" x2="420" y2="157" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 2"/>
+        <line x1="420" y1="157" x2="430" y2="157" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 2"/>
+
+        <!-- X baseline -->
+        <line x1="120" y1="210" x2="490" y2="210" stroke="#e2e8f0" stroke-width="1.5"/>
+
+        <!-- Issues mini-table -->
+        <rect x="0" y="240" width="446" height="36" rx="6" fill="#fef2f2"/>
+        <text x="12" y="258" font-size="11" font-weight="700" fill="#991b1b" font-family="Arial">GREENLIGHT TOP ISSUE:</text>
+        <text x="168" y="258" font-size="11" fill="#0f172a" font-family="Arial">"Managing an account" — 7 of 19 complaints (37%)</text>
+        <text x="12" y="272" font-size="11" fill="#475569" font-family="Arial">Also: Closing an account · Fraud or scam · Opening an account · Problem getting a card</text>
       </svg>
     </div>
 
@@ -634,7 +617,7 @@ body {
 
   <div class="insight-header" style="padding-bottom: 14px;">
     <div class="overline">Recommendation</div>
-    <div class="takeaway" style="font-size:30px;">One Operational Change Can Halve Greenlight's Dispute Escalation Rate</div>
+    <div class="takeaway" style="font-size:30px;">Fix Account Routing First — Greenlight Can Close a 15× Response Gap Without Changing Its Product</div>
   </div>
 
   <div class="rec-content">
@@ -643,46 +626,47 @@ body {
     <div class="rec-block" style="border: 2px solid var(--green); background: var(--green-l);">
       <div class="label">Action</div>
       <div class="action" style="color: var(--green-d);">
-        Implement automated triage routing for prepaid card disputes,
-        targeting a 72-hour initial response SLA for all
-        consumer-initiated complaint types.
+        Automate account management complaint triage with a
+        72-hour initial response SLA — targeting the "Managing
+        an account" and "Closing an account" issue types that
+        drive 47% of Greenlight's CFPB escalations.
       </div>
       <div class="arrow-row">
         <span style="font-size: 28px;">→</span>
       </div>
       <div class="label">Expected Outcome</div>
       <div class="outcome">
-        Move <strong>late responders (15–30 days) into the on-time tier</strong>,
-        reducing the dispute escalation rate from <strong>~31% to ~18%</strong> —
-        a projected <strong>42% reduction</strong> in CFPB-escalated disputes
-        for Greenlight's prepaid card product.
+        Bring Greenlight's late-response rate from <strong>21.1%</strong>
+        to the sector minimum of <strong>≤1.4%</strong> —
+        a <strong>15× improvement</strong> that directly reduces CFPB
+        regulatory exposure for a product serving 6.5M families.
       </div>
     </div>
 
     <!-- Right: supporting context -->
     <div class="rec-right">
       <div class="rec-context">
-        <strong>Why this works:</strong> The diagnostic data shows that
-        dispute escalation is driven by response timing, not complaint
-        volume. A faster routing system targets the root cause directly —
-        without requiring changes to product features or pricing.
+        <strong>Why this works:</strong> The diagnostic data shows response
+        timing — not product quality — is Greenlight's primary CFPB
+        escalation driver. Automated routing addresses the root cause
+        without requiring feature changes or pricing restructuring.
       </div>
       <div class="rec-context">
-        <strong>Why it matters for Greenlight:</strong> With 6.5 million users,
-        each percentage-point reduction in dispute rate represents thousands
-        fewer CFPB-escalated cases, lower regulatory risk, and measurably
-        better consumer trust signals — directly supporting the company's
-        family financial literacy brand promise.
+        <strong>Why it matters for Greenlight:</strong> With 6.5M users,
+        each percentage-point reduction in late responses represents
+        thousands fewer CFPB-escalated cases, lower regulatory risk,
+        and stronger consumer trust signals for a company whose brand
+        promise is family financial safety.
       </div>
       <div class="rec-context">
-        <strong>The $50 rule:</strong> A disputed $50 prepaid card charge
-        equals 6 weeks of allowance for a 10-year-old. Families who
-        dispute at that level are not edge cases — they're Greenlight's
-        core customer.
+        <strong>The sector benchmark exists:</strong> Money transfer
+        products hit 98.6% timely response at scale. That's not
+        aspirational — it's the floor. Greenlight has a clear, proven
+        target to close toward.
       </div>
       <div class="badge-row">
-        <span class="badge badge-green">Operational (no product change)</span>
-        <span class="badge badge-navy">Data-validated</span>
+        <span class="badge badge-green">No product change required</span>
+        <span class="badge badge-navy">Data-validated gap</span>
         <span class="badge badge-navy">Measurable outcome</span>
       </div>
     </div>
@@ -711,7 +695,7 @@ body {
       <div class="pipeline-row">
         <div class="p-label">Source 1</div>
         <div class="p-items">
-          <div class="p-box p-box-outline">CFPB REST API<br><span style="font-size:11px;color:#94a3b8;">6.8M+ complaints</span></div>
+          <div class="p-box p-box-outline">CFPB REST API<br><span style="font-size:11px;color:#94a3b8;">4M+ complaints</span></div>
           <div class="p-arrow">→</div>
           <div class="p-box p-box-outline">GitHub Actions<br><span style="font-size:11px;color:#94a3b8;">Daily 6AM UTC</span></div>
           <div class="p-arrow">→</div>
@@ -721,10 +705,10 @@ body {
           <div class="p-arrow">→</div>
           <div class="p-box p-box-green">dbt Mart<br><span style="font-size:11px;color:#007a5a;">fact + 5 dims</span></div>
           <div class="p-arrow">→</div>
-          <div class="p-box p-box-dark">Streamlit<br><span style="font-size:11px;opacity:0.7;">Dashboard</span></div>
+          <div class="p-box p-box-dark">Streamlit<br><span style="font-size:11px;opacity:0.7;">fintech-analytics.streamlit.app</span></div>
         </div>
       </div>
-      <div class="pipeline-note">21 dbt tests passing &nbsp;·&nbsp; Snowflake AWS US-East-1 &nbsp;·&nbsp; Star schema: FACT_COMPLAINTS + DIM_PRODUCT, DIM_COMPANY, DIM_ISSUE, DIM_GEOGRAPHY, DIM_DATE</div>
+      <div class="pipeline-note">Star schema: FACT_COMPLAINTS + DIM_PRODUCT, DIM_COMPANY, DIM_ISSUE, DIM_GEOGRAPHY, DIM_DATE &nbsp;·&nbsp; Snowflake AWS US-East-1</div>
     </div>
 
     <div class="pipeline-divider"></div>
@@ -754,7 +738,7 @@ body {
     <div style="display:flex; gap: 24px; padding-top: 4px;">
       <div style="flex:1; background: var(--bg); border-radius: 8px; padding: 14px 20px;">
         <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--muted); margin-bottom:6px;">Data Quality</div>
-        <div style="font-size:14px; color: var(--navy);">21 dbt schema tests · 0 failures · Incremental extraction with watermark · NULL-safe surrogate keys via SHA hash</div>
+        <div style="font-size:14px; color: var(--navy);">dbt schema tests passing · 0 failures · Incremental extraction with watermark · NULL-safe surrogate keys via SHA hash</div>
       </div>
       <div style="flex:1; background: var(--bg); border-radius: 8px; padding: 14px 20px;">
         <div style="font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--muted); margin-bottom:6px;">Security</div>
