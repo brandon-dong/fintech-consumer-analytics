@@ -241,4 +241,83 @@ with tab1:
         st.warning("No data for the selected filters.")
 
 with tab2:
-    st.info("Resolution Quality charts coming soon.")
+
+    # Chart 4: Dispute rate by product
+    df_dispute = query_filtered(SQL_DISPUTE_RATE, products_t, years_t)
+    if not df_dispute.empty:
+        worst = df_dispute.iloc[0]
+        st.subheader(
+            f"'{worst['PRODUCT_NAME']}' has the highest dispute rate "
+            f"at {worst['DISPUTE_RATE_PCT']}%"
+        )
+        fig4 = px.bar(
+            df_dispute, x="DISPUTE_RATE_PCT", y="PRODUCT_NAME", orientation="h",
+            labels={"DISPUTE_RATE_PCT": "Dispute Rate (%)", "PRODUCT_NAME": "Product"},
+        )
+        fig4.update_layout(yaxis={"categoryorder": "total ascending"})
+        st.plotly_chart(fig4, use_container_width=True)
+    else:
+        st.warning("No data for the selected filters.")
+
+    st.divider()
+
+    # Chart 5: Timely response rate by product
+    df_timely = query_filtered(SQL_TIMELY_RATE, products_t, years_t)
+    if not df_timely.empty:
+        worst_t = df_timely.iloc[0]
+        st.subheader(
+            f"'{worst_t['PRODUCT_NAME']}' has the lowest timely response rate "
+            f"at {worst_t['TIMELY_RATE_PCT']}%"
+        )
+        fig5 = px.bar(
+            df_timely, x="TIMELY_RATE_PCT", y="PRODUCT_NAME", orientation="h",
+            labels={"TIMELY_RATE_PCT": "Timely Response Rate (%)", "PRODUCT_NAME": "Product"},
+        )
+        fig5.update_layout(yaxis={"categoryorder": "total descending"})
+        st.plotly_chart(fig5, use_container_width=True)
+    else:
+        st.warning("No data for the selected filters.")
+
+    st.divider()
+
+    # Company drill-down
+    all_companies = load_companies()
+    greenlight_matches = [c for c in all_companies if "greenlight" in c.lower()]
+    default_idx = all_companies.index(greenlight_matches[0]) if greenlight_matches else 0
+    selected_company = st.selectbox("Select a company", all_companies, index=default_idx)
+
+    df_metrics = query_company(SQL_COMPANY_METRICS, selected_company)
+    df_issues  = query_company(SQL_COMPANY_ISSUES, selected_company)
+    avg_dispute = load_avg_dispute()
+
+    if not df_metrics.empty:
+        row = df_metrics.iloc[0]
+        company_dispute = float(row["DISPUTE_RATE_PCT"] or 0) if not pd.isna(row["DISPUTE_RATE_PCT"]) else 0.0
+        company_timely  = float(row["TIMELY_RATE_PCT"] or 0) if not pd.isna(row["TIMELY_RATE_PCT"]) else 0.0
+        delta = round(company_dispute - avg_dispute, 1)
+        direction = "above" if delta > 0 else "below"
+
+        st.subheader(
+            f"{selected_company} dispute rate is {abs(delta)}% {direction} "
+            f"the dataset average ({avg_dispute}%)"
+        )
+
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Total Complaints", f"{int(row['TOTAL_COMPLAINTS']):,}")
+        col2.metric(
+            "Dispute Rate",
+            f"{company_dispute}%",
+            delta=f"{delta:+.1f}% vs avg",
+            delta_color="inverse",
+        )
+        col3.metric("Timely Response Rate", f"{company_timely}%")
+    else:
+        st.warning(f"No complaint data found for {selected_company}.")
+
+    if not df_issues.empty:
+        st.write("**Top 5 Complaint Issues**")
+        st.dataframe(
+            df_issues.rename(columns={"ISSUE": "Issue", "COMPLAINT_COUNT": "Count"}),
+            use_container_width=True,
+            hide_index=True,
+        )
