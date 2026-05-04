@@ -2,7 +2,7 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
-from dashboard.helpers import str_in_clause, int_in_clause
+from helpers import str_in_clause, int_in_clause
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
