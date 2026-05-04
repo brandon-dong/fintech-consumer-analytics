@@ -102,11 +102,11 @@ erDiagram
 
 ## Key Insights
 
-**Descriptive (what happened?):** [Takeaway title — fill in from dashboard Tab 1]
+**Descriptive (what happened?):** Checking or savings account generates the most fintech complaints (212,760), with volume peaking in January 2025 at 70,316 — and 90% filed via web, signaling a digitally engaged consumer base that knows how to escalate.
 
-**Diagnostic (why did it happen?):** [Takeaway title — fill in from dashboard Tab 2]
+**Diagnostic (why did it happen?):** Money transfer and virtual currency products have the lowest timely response rate (98.6%), lagging behind other categories — suggesting operational gaps in dispute handling for high-velocity digital payment products.
 
-**Recommendation:** [Action] → [Expected outcome]
+**Recommendation:** Fintech companies in payments and digital banking should invest in automated complaint triage → faster company response times reduce CFPB escalation risk and consumer churn.
 
 ## Live Dashboard
 
