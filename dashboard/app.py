@@ -244,22 +244,25 @@ with tab2:
 
     # Chart 4: Dispute rate by product
     df_dispute = query_filtered(SQL_DISPUTE_RATE, products_t, years_t)
-    if not df_dispute.empty:
-        worst = df_dispute.iloc[0]
-        worst_rate = worst["DISPUTE_RATE_PCT"]
-        rate_label = f"{worst_rate}%" if worst_rate is not None else "N/A"
+    df_dispute_valid = df_dispute[df_dispute["DISPUTE_RATE_PCT"].notna()]
+    if not df_dispute_valid.empty:
+        worst = df_dispute_valid.iloc[0]
         st.subheader(
             f"'{worst['PRODUCT_NAME']}' has the highest dispute rate "
-            f"at {rate_label}"
+            f"at {worst['DISPUTE_RATE_PCT']}%"
         )
         fig4 = px.bar(
-            df_dispute, x="DISPUTE_RATE_PCT", y="PRODUCT_NAME", orientation="h",
+            df_dispute_valid, x="DISPUTE_RATE_PCT", y="PRODUCT_NAME", orientation="h",
             labels={"DISPUTE_RATE_PCT": "Dispute Rate (%)", "PRODUCT_NAME": "Product"},
         )
         fig4.update_layout(yaxis={"categoryorder": "total ascending"})
         st.plotly_chart(fig4, use_container_width=True)
     else:
-        st.warning("No data for the selected filters.")
+        st.info(
+            "Consumer dispute rate data is not available. "
+            "The CFPB discontinued collecting the 'consumer disputed' field in 2017, "
+            "so this metric is absent from post-2017 complaint records."
+        )
 
     st.divider()
 
