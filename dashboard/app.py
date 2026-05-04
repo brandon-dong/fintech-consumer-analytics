@@ -53,20 +53,6 @@ SQL_CHANNELS = f"""
     GROUP BY 1 ORDER BY 2 DESC
 """
 
-SQL_DISPUTE_RATE = f"""
-    SELECT dp.product_name,
-           ROUND(100.0 * SUM(CASE WHEN f.consumer_disputed_flag = TRUE THEN 1 ELSE 0 END)
-                 / NULLIF(SUM(CASE WHEN f.consumer_disputed_flag IS NOT NULL THEN 1 ELSE 0 END), 0), 1)
-               AS dispute_rate_pct
-    FROM {_MART}.FACT_COMPLAINTS f
-    JOIN {_MART}.DIM_PRODUCT dp ON f.product_key = dp.product_key
-    JOIN {_MART}.DIM_DATE dd    ON f.date_key    = dd.date_key
-    WHERE dp.product_name IN {{products}}
-      AND dd.year IN {{years}}
-    GROUP BY 1 HAVING COUNT(*) >= 50
-    ORDER BY 2 DESC NULLS LAST
-"""
-
 SQL_TIMELY_RATE = f"""
     SELECT dp.product_name,
            ROUND(100.0 * SUM(CASE WHEN f.timely_response_flag = TRUE THEN 1 ELSE 0 END)
@@ -241,30 +227,6 @@ with tab1:
         st.warning("No data for the selected filters.")
 
 with tab2:
-
-    # Chart 4: Dispute rate by product
-    df_dispute = query_filtered(SQL_DISPUTE_RATE, products_t, years_t)
-    df_dispute_valid = df_dispute[df_dispute["DISPUTE_RATE_PCT"].notna()]
-    if not df_dispute_valid.empty:
-        worst = df_dispute_valid.iloc[0]
-        st.subheader(
-            f"'{worst['PRODUCT_NAME']}' has the highest dispute rate "
-            f"at {worst['DISPUTE_RATE_PCT']}%"
-        )
-        fig4 = px.bar(
-            df_dispute_valid, x="DISPUTE_RATE_PCT", y="PRODUCT_NAME", orientation="h",
-            labels={"DISPUTE_RATE_PCT": "Dispute Rate (%)", "PRODUCT_NAME": "Product"},
-        )
-        fig4.update_layout(yaxis={"categoryorder": "total ascending"})
-        st.plotly_chart(fig4, use_container_width=True)
-    else:
-        st.info(
-            "Consumer dispute rate data is not available. "
-            "The CFPB discontinued collecting the 'consumer disputed' field in 2017, "
-            "so this metric is absent from post-2017 complaint records."
-        )
-
-    st.divider()
 
     # Chart 5: Timely response rate by product
     df_timely = query_filtered(SQL_TIMELY_RATE, products_t, years_t)
