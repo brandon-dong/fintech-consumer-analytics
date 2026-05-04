@@ -64,7 +64,7 @@ SQL_DISPUTE_RATE = f"""
     WHERE dp.product_name IN {{products}}
       AND dd.year IN {{years}}
     GROUP BY 1 HAVING COUNT(*) >= 50
-    ORDER BY 2 DESC
+    ORDER BY 2 DESC NULLS LAST
 """
 
 SQL_TIMELY_RATE = f"""
@@ -145,10 +145,10 @@ def query_company(sql_template: str, company: str):
 
 
 @st.cache_data(ttl=3600)
-def load_avg_dispute() -> float:
+def load_avg_dispute() -> float | None:
     row = conn.query(SQL_AVG_DISPUTE, ttl=0).iloc[0]
     val = row["AVG_DISPUTE_RATE"]
-    return 0.0 if pd.isna(val) else float(val)
+    return None if pd.isna(val) else float(val)
 
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -246,9 +246,11 @@ with tab2:
     df_dispute = query_filtered(SQL_DISPUTE_RATE, products_t, years_t)
     if not df_dispute.empty:
         worst = df_dispute.iloc[0]
+        worst_rate = worst["DISPUTE_RATE_PCT"]
+        rate_label = f"{worst_rate}%" if worst_rate is not None else "N/A"
         st.subheader(
             f"'{worst['PRODUCT_NAME']}' has the highest dispute rate "
-            f"at {worst['DISPUTE_RATE_PCT']}%"
+            f"at {rate_label}"
         )
         fig4 = px.bar(
             df_dispute, x="DISPUTE_RATE_PCT", y="PRODUCT_NAME", orientation="h",
@@ -295,31 +297,37 @@ with tab2:
 
         if not df_metrics.empty:
             row = df_metrics.iloc[0]
-            company_dispute = 0.0 if pd.isna(row["DISPUTE_RATE_PCT"]) else float(row["DISPUTE_RATE_PCT"])
-            company_timely  = 0.0 if pd.isna(row["TIMELY_RATE_PCT"]) else float(row["TIMELY_RATE_PCT"])
-            delta = round(company_dispute - avg_dispute, 1)
+            company_dispute = None if pd.isna(row["DISPUTE_RATE_PCT"]) else float(row["DISPUTE_RATE_PCT"])
+            company_timely  = None if pd.isna(row["TIMELY_RATE_PCT"]) else float(row["TIMELY_RATE_PCT"])
 
-            if delta > 0:
-                direction_phrase = f"{abs(delta)}% above"
-            elif delta < 0:
-                direction_phrase = f"{abs(delta)}% below"
+            if company_dispute is not None and avg_dispute is not None:
+                delta = round(company_dispute - avg_dispute, 1)
+                if delta > 0:
+                    direction_phrase = f"{abs(delta)}% above"
+                elif delta < 0:
+                    direction_phrase = f"{abs(delta)}% below"
+                else:
+                    direction_phrase = "equal to"
+                st.subheader(
+                    f"{selected_company} dispute rate is {direction_phrase} "
+                    f"the dataset average ({avg_dispute}%)"
+                )
             else:
-                direction_phrase = "equal to"
-
-            st.subheader(
-                f"{selected_company} dispute rate is {direction_phrase} "
-                f"the dataset average ({avg_dispute}%)"
-            )
+                delta = None
+                st.subheader(
+                    f"{selected_company}: {int(row['TOTAL_COMPLAINTS']):,} total complaints "
+                    f"(dispute rate data not available)"
+                )
 
             col1, col2, col3 = st.columns(3)
             col1.metric("Total Complaints", f"{int(row['TOTAL_COMPLAINTS']):,}")
             col2.metric(
                 "Dispute Rate",
-                f"{company_dispute}%",
-                delta=f"{delta:+.1f}% vs avg",
+                f"{company_dispute}%" if company_dispute is not None else "N/A",
+                delta=f"{delta:+.1f}% vs avg" if delta is not None else None,
                 delta_color="inverse",
             )
-            col3.metric("Timely Response Rate", f"{company_timely}%")
+            col3.metric("Timely Response Rate", f"{company_timely}%" if company_timely is not None else "N/A")
         else:
             st.warning(f"No complaint data found for {selected_company}.")
 
