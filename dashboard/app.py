@@ -182,7 +182,59 @@ st.caption("CFPB Consumer Complaint Database · Snowflake + dbt")
 tab1, tab2 = st.tabs(["📊 Complaint Trends", "🔍 Resolution Quality"])
 
 with tab1:
-    st.info("Complaint Trends charts coming soon.")
+
+    # Chart 1: Monthly volume
+    df_monthly = query_filtered(SQL_MONTHLY_VOLUME, products_t, years_t)
+    if not df_monthly.empty:
+        peak = df_monthly.loc[df_monthly["COMPLAINT_COUNT"].idxmax()]
+        st.subheader(
+            f"Complaint volume peaked in {peak['YEAR_MONTH']} "
+            f"with {int(peak['COMPLAINT_COUNT']):,} complaints"
+        )
+        fig1 = px.line(
+            df_monthly, x="YEAR_MONTH", y="COMPLAINT_COUNT",
+            labels={"YEAR_MONTH": "Month", "COMPLAINT_COUNT": "Complaints"},
+        )
+        fig1.update_traces(line_color="#2563eb")
+        fig1.update_layout(xaxis_tickangle=-45)
+        st.plotly_chart(fig1, use_container_width=True)
+    else:
+        st.warning("No data for the selected filters.")
+
+    st.divider()
+
+    # Chart 2: By product
+    df_product = query_filtered(SQL_BY_PRODUCT, products_t, years_t)
+    if not df_product.empty:
+        top = df_product.iloc[0]
+        st.subheader(
+            f"'{top['PRODUCT_NAME']}' generates the most complaints "
+            f"({int(top['COMPLAINT_COUNT']):,})"
+        )
+        fig2 = px.bar(
+            df_product, x="COMPLAINT_COUNT", y="PRODUCT_NAME", orientation="h",
+            labels={"COMPLAINT_COUNT": "Complaints", "PRODUCT_NAME": "Product"},
+        )
+        fig2.update_layout(yaxis={"categoryorder": "total ascending"})
+        st.plotly_chart(fig2, use_container_width=True)
+
+    st.divider()
+
+    # Chart 3: Submission channels
+    df_channels = query_filtered(SQL_CHANNELS, products_t, years_t)
+    if not df_channels.empty:
+        total = int(df_channels["COMPLAINT_COUNT"].sum())
+        web_count = int(
+            df_channels.loc[df_channels["CHANNEL"] == "web", "COMPLAINT_COUNT"].sum()
+        )
+        web_pct = round(100 * web_count / total) if total > 0 else 0
+        st.subheader(f"Web submissions account for {web_pct}% of all complaints")
+        fig3 = px.bar(
+            df_channels, x="COMPLAINT_COUNT", y="CHANNEL", orientation="h",
+            labels={"COMPLAINT_COUNT": "Complaints", "CHANNEL": "Channel"},
+        )
+        fig3.update_layout(yaxis={"categoryorder": "total ascending"})
+        st.plotly_chart(fig3, use_container_width=True)
 
 with tab2:
     st.info("Resolution Quality charts coming soon.")
