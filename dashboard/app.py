@@ -273,7 +273,7 @@ with tab2:
             df_timely, x="TIMELY_RATE_PCT", y="PRODUCT_NAME", orientation="h",
             labels={"TIMELY_RATE_PCT": "Timely Response Rate (%)", "PRODUCT_NAME": "Product"},
         )
-        fig5.update_layout(yaxis={"categoryorder": "total descending"})
+        fig5.update_layout(yaxis={"categoryorder": "total ascending"})
         st.plotly_chart(fig5, use_container_width=True)
     else:
         st.warning("No data for the selected filters.")
@@ -292,13 +292,19 @@ with tab2:
 
     if not df_metrics.empty:
         row = df_metrics.iloc[0]
-        company_dispute = float(row["DISPUTE_RATE_PCT"] or 0) if not pd.isna(row["DISPUTE_RATE_PCT"]) else 0.0
-        company_timely  = float(row["TIMELY_RATE_PCT"] or 0) if not pd.isna(row["TIMELY_RATE_PCT"]) else 0.0
+        company_dispute = 0.0 if pd.isna(row["DISPUTE_RATE_PCT"]) else float(row["DISPUTE_RATE_PCT"])
+        company_timely  = 0.0 if pd.isna(row["TIMELY_RATE_PCT"]) else float(row["TIMELY_RATE_PCT"])
         delta = round(company_dispute - avg_dispute, 1)
-        direction = "above" if delta > 0 else "below"
+
+        if delta > 0:
+            direction_phrase = f"{abs(delta)}% above"
+        elif delta < 0:
+            direction_phrase = f"{abs(delta)}% below"
+        else:
+            direction_phrase = "equal to"
 
         st.subheader(
-            f"{selected_company} dispute rate is {abs(delta)}% {direction} "
+            f"{selected_company} dispute rate is {direction_phrase} "
             f"the dataset average ({avg_dispute}%)"
         )
 
