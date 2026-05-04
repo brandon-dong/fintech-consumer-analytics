@@ -1,5 +1,6 @@
 import streamlit as st
 import plotly.express as px
+import pandas as pd
 
 from dashboard.helpers import str_in_clause, int_in_clause
 
@@ -80,6 +81,8 @@ SQL_TIMELY_RATE = f"""
     ORDER BY 2 ASC
 """
 
+# Company drill-down queries are intentionally year-agnostic — they show
+# the company's full complaint history as a consistent benchmark.
 SQL_COMPANY_METRICS = f"""
     SELECT COUNT(*) AS total_complaints,
            ROUND(100.0 * SUM(CASE WHEN f.consumer_disputed_flag = TRUE THEN 1 ELSE 0 END)
@@ -144,18 +147,27 @@ def query_company(sql_template: str, company: str):
 @st.cache_data(ttl=3600)
 def load_avg_dispute() -> float:
     row = conn.query(SQL_AVG_DISPUTE, ttl=0).iloc[0]
-    return float(row["AVG_DISPUTE_RATE"] or 0)
+    val = row["AVG_DISPUTE_RATE"]
+    return 0.0 if pd.isna(val) else float(val)
 
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 st.sidebar.title("Filters")
 
 all_products = load_products()
+if not all_products:
+    st.error("No products found in Snowflake MART. Check your Snowflake connection and dbt models.")
+    st.stop()
+
 sel_products = st.sidebar.multiselect("Product", all_products, default=all_products)
 if not sel_products:
     sel_products = all_products
 
 all_years = load_years()
+if not all_years:
+    st.error("No years found in Snowflake MART. Check your Snowflake connection and dbt models.")
+    st.stop()
+
 sel_years = st.sidebar.multiselect("Year", all_years, default=all_years)
 if not sel_years:
     sel_years = all_years
