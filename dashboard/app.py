@@ -273,7 +273,7 @@ with tab2:
             df_timely, x="TIMELY_RATE_PCT", y="PRODUCT_NAME", orientation="h",
             labels={"TIMELY_RATE_PCT": "Timely Response Rate (%)", "PRODUCT_NAME": "Product"},
         )
-        fig5.update_layout(yaxis={"categoryorder": "total ascending"})
+        fig5.update_layout(yaxis={"categoryorder": "total descending"})
         st.plotly_chart(fig5, use_container_width=True)
     else:
         st.warning("No data for the selected filters.")
@@ -282,48 +282,51 @@ with tab2:
 
     # Company drill-down
     all_companies = load_companies()
-    greenlight_matches = [c for c in all_companies if "greenlight" in c.lower()]
-    default_idx = all_companies.index(greenlight_matches[0]) if greenlight_matches else 0
-    selected_company = st.selectbox("Select a company", all_companies, index=default_idx)
-
-    df_metrics = query_company(SQL_COMPANY_METRICS, selected_company)
-    df_issues  = query_company(SQL_COMPANY_ISSUES, selected_company)
-    avg_dispute = load_avg_dispute()
-
-    if not df_metrics.empty:
-        row = df_metrics.iloc[0]
-        company_dispute = 0.0 if pd.isna(row["DISPUTE_RATE_PCT"]) else float(row["DISPUTE_RATE_PCT"])
-        company_timely  = 0.0 if pd.isna(row["TIMELY_RATE_PCT"]) else float(row["TIMELY_RATE_PCT"])
-        delta = round(company_dispute - avg_dispute, 1)
-
-        if delta > 0:
-            direction_phrase = f"{abs(delta)}% above"
-        elif delta < 0:
-            direction_phrase = f"{abs(delta)}% below"
-        else:
-            direction_phrase = "equal to"
-
-        st.subheader(
-            f"{selected_company} dispute rate is {direction_phrase} "
-            f"the dataset average ({avg_dispute}%)"
-        )
-
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Total Complaints", f"{int(row['TOTAL_COMPLAINTS']):,}")
-        col2.metric(
-            "Dispute Rate",
-            f"{company_dispute}%",
-            delta=f"{delta:+.1f}% vs avg",
-            delta_color="inverse",
-        )
-        col3.metric("Timely Response Rate", f"{company_timely}%")
+    if not all_companies:
+        st.warning("No company data found. Check that dbt mart models have run.")
     else:
-        st.warning(f"No complaint data found for {selected_company}.")
+        greenlight_matches = [c for c in all_companies if "greenlight" in c.lower()]
+        default_idx = all_companies.index(greenlight_matches[0]) if greenlight_matches else 0
+        selected_company = st.selectbox("Select a company", all_companies, index=default_idx)
 
-    if not df_issues.empty:
-        st.write("**Top 5 Complaint Issues**")
-        st.dataframe(
-            df_issues.rename(columns={"ISSUE": "Issue", "COMPLAINT_COUNT": "Count"}),
-            use_container_width=True,
-            hide_index=True,
-        )
+        df_metrics = query_company(SQL_COMPANY_METRICS, selected_company)
+        df_issues  = query_company(SQL_COMPANY_ISSUES, selected_company)
+        avg_dispute = load_avg_dispute()
+
+        if not df_metrics.empty:
+            row = df_metrics.iloc[0]
+            company_dispute = 0.0 if pd.isna(row["DISPUTE_RATE_PCT"]) else float(row["DISPUTE_RATE_PCT"])
+            company_timely  = 0.0 if pd.isna(row["TIMELY_RATE_PCT"]) else float(row["TIMELY_RATE_PCT"])
+            delta = round(company_dispute - avg_dispute, 1)
+
+            if delta > 0:
+                direction_phrase = f"{abs(delta)}% above"
+            elif delta < 0:
+                direction_phrase = f"{abs(delta)}% below"
+            else:
+                direction_phrase = "equal to"
+
+            st.subheader(
+                f"{selected_company} dispute rate is {direction_phrase} "
+                f"the dataset average ({avg_dispute}%)"
+            )
+
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Total Complaints", f"{int(row['TOTAL_COMPLAINTS']):,}")
+            col2.metric(
+                "Dispute Rate",
+                f"{company_dispute}%",
+                delta=f"{delta:+.1f}% vs avg",
+                delta_color="inverse",
+            )
+            col3.metric("Timely Response Rate", f"{company_timely}%")
+        else:
+            st.warning(f"No complaint data found for {selected_company}.")
+
+        if not df_issues.empty:
+            st.write("**Top 5 Complaint Issues**")
+            st.dataframe(
+                df_issues.rename(columns={"ISSUE": "Issue", "COMPLAINT_COUNT": "Count"}),
+                use_container_width=True,
+                hide_index=True,
+            )
