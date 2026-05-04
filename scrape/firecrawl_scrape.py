@@ -65,25 +65,24 @@ def build_header(url: str, filename: str) -> str:
 
 
 def main() -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    pending = [(url, fn) for url, fn in SOURCES if not (OUTPUT_DIR / fn).exists()]
+
+    if not pending:
+        print(f"All {len(SOURCES)} files already exist — nothing to scrape.")
+        return
+
     api_key = os.environ.get("FIRECRAWL_API_KEY")
     if not api_key:
         print("ERROR: FIRECRAWL_API_KEY environment variable not set", file=sys.stderr)
         sys.exit(1)
 
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    today = date.today().isoformat()
-
-    skipped = 0
     scraped = 0
     errors = 0
 
-    for url, filename in SOURCES:
+    for url, filename in pending:
         out_path = OUTPUT_DIR / filename
-        if out_path.exists():
-            print(f"  skip  {filename} (already exists)")
-            skipped += 1
-            continue
-
         print(f"  fetch {url} → {filename}")
         try:
             markdown = scrape_url(api_key, url)
@@ -95,6 +94,7 @@ def main() -> None:
             print(f"  ERROR scraping {url}: {exc}", file=sys.stderr)
             errors += 1
 
+    skipped = len(SOURCES) - len(pending)
     print(f"\nDone: {scraped} scraped, {skipped} skipped, {errors} errors")
     if errors:
         sys.exit(1)
